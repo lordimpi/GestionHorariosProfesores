@@ -1,4 +1,8 @@
 using DataAccess.Data;
+using DataAccess.Repositories.Contracts;
+using DataAccess.Repositories.Implementations;
+using Infrastructure.Services.Contracts;
+using Infrastructure.Services.Implementation;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,7 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-
+builder.Services.AddScoped<IProgramaRepository, ProgramaRepository>();
+builder.Services.AddScoped<IProgramaServices, ProgramaService>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(o =>
 {
