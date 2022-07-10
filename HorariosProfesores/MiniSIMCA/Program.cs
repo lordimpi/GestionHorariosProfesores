@@ -4,11 +4,13 @@ using DataAccess.Repositories.Implementations;
 using Infrastructure.Services.Contracts;
 using Infrastructure.Services.Implementations;
 using Microsoft.EntityFrameworkCore;
+using Vereyon.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddFlashMessage();
 
 builder.Services.AddTransient<SeedDb>();
 builder.Services.AddScoped<IProgramaRepository, ProgramaRepository>();

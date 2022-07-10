@@ -1,4 +1,4 @@
-namespace MiniSIMCA.Models
+namespace MiniSIMCA.Helpers
 {
     public class ErrorViewModel
     {

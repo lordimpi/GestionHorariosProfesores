@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MiniSIMCA.Models;
+using MiniSIMCA.Helpers;
 using System.Diagnostics;
 
 namespace MiniSIMCA.Controllers
