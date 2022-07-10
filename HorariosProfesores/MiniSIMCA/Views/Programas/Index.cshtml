@@ -1,0 +1,81 @@
+﻿@model IEnumerable<DataAccess.Data.Entities.Programa>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <h2>Programas disponibles</h2>
+        </div>
+        <div class="col-sm-6">
+            <a class="btn btn-dark d-flex" asp-action="Create" asp-controller="Programas"> Agregar programa</a>
+        </div>
+    </div>
+
+    <div class="row">
+        @if (Model.Count() == 0)
+        {
+            <div>
+                <h1 class="text-danger">No hay programas disponibles</h1>
+            </div>
+        }
+        else
+        {
+            <table class="table table-hover table-responsive table-striped" id="MyTable">
+
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(x => x.Programa_Id)</th>
+                        <th>@Html.DisplayNameFor(x => x.Programa_Nombre)</th>
+                        <th>Edit/Delete</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var programa in Model)
+                    {
+                        <tr>
+                            <td>@programa.Programa_Id</td>
+                            <td>@programa.Programa_Nombre</td>
+                            <td>
+                                <a class="btn btn-outline-success" asp-action="Edit" asp-controller="Programas" asp-route-id="@programa.Programa_Id">Editar</a>
+                                <button data-id="@programa.Programa_Id" class="btn btn-outline-danger deleteItem" data-toggle="modal" data-target="#deleteDialog">
+                                    Borrar
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        }
+    </div>
+</div>
+
+@*<partial name="_DeleteDialog" />*@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#MyTable').DataTable();
+
+            // Delete item
+            var item_to_delete;
+
+            $('.deleteItem').click((e) => {
+                item_to_delete = e.currentTarget.dataset.id;
+            });
+
+            $("#btnYesDelete").click(function () {
+                window.location.href = '/MainDish/Delete/' + item_to_delete;
+            });
+        });
+    </script>
+}

@@ -2,7 +2,7 @@ using DataAccess.Data;
 using DataAccess.Repositories.Contracts;
 using DataAccess.Repositories.Implementations;
 using Infrastructure.Services.Contracts;
-using Infrastructure.Services.Implementation;
+using Infrastructure.Services.Implementations;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,8 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddTransient<SeedDb>();
 builder.Services.AddScoped<IProgramaRepository, ProgramaRepository>();
-builder.Services.AddScoped<IProgramaServices, ProgramaService>();
+builder.Services.AddScoped<IProgramaService, ProgramaService>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(o =>
 {
@@ -20,6 +21,19 @@ builder.Services.AddDbContext<ApplicationDbContext>(o =>
 
 
 var app = builder.Build();
+
+SeedData(app);
+
+void SeedData(WebApplication app)
+{
+    IServiceScopeFactory scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+
+    using (IServiceScope scope = scopedFactory.CreateScope())
+    {
+        SeedDb service = scope.ServiceProvider.GetService<SeedDb>();
+        service.SeedAsync().Wait();
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

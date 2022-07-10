@@ -2,9 +2,9 @@
 using DataAccess.Repositories.Contracts;
 using Infrastructure.Services.Contracts;
 
-namespace Infrastructure.Services.Implementation
+namespace Infrastructure.Services.Implementations
 {
-    public class ProgramaService : IProgramaServices
+    public class ProgramaService : IProgramaService
     {
         private readonly IProgramaRepository _programaRepository;
 
@@ -12,7 +12,6 @@ namespace Infrastructure.Services.Implementation
         {
             _programaRepository = programaRepository;
         }
-
         public Task<bool> CreatePrograma(Programa programa)
         {
             return _programaRepository.CreatePrograma(programa);

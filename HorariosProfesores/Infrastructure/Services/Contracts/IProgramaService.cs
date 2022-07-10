@@ -2,7 +2,7 @@
 
 namespace Infrastructure.Services.Contracts
 {
-    public interface IProgramaServices
+    public interface IProgramaService
     {
         Task<ICollection<Programa>> GetProgramas();
         Task<Programa> GetProgramaById(int programaId);

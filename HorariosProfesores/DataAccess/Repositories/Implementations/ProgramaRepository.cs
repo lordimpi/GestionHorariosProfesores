@@ -41,7 +41,9 @@ namespace DataAccess.Repositories.Implementations
 
         public async Task<ICollection<Programa>> GetProgramas()
         {
-            return await _context.Programas.ToListAsync();
+            return await _context.Programas
+                .Where(p => p.IsActivo)
+                .ToListAsync();
         }
 
         public async Task<bool> ModifyPrograma(Programa programa)
