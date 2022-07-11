@@ -13,9 +13,11 @@ namespace DataAccess.Data
 
         public DbSet<Programa> Programas { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(builder);
+            builder.Entity<Programa>().HasIndex(p => p.Programa_Nombre).IsUnique();
+            //builder.Entity<Competencia>().HasIndex("Name", "CountryId").IsUnique();
         }
 
     }

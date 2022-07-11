@@ -17,12 +17,12 @@ namespace Infrastructure.Services.Implementations
             return _programaRepository.CreatePrograma(programa);
         }
 
-        public Task<bool> DeletePrograma(int id)
+        public Task<bool> DeletePrograma(int? id)
         {
             return _programaRepository.DeletePrograma(id);
         }
 
-        public Task<Programa> GetProgramaById(int programaId)
+        public Task<Programa> GetProgramaById(int? programaId)
         {
             return _programaRepository.GetProgramaById(programaId);
         }

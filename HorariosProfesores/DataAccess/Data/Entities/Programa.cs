@@ -12,6 +12,7 @@ namespace DataAccess.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Programa_Nombre { get; set; }
 
+        [Display(Name = "Estado")]
         public bool IsActivo { get; set; }
     }
 }

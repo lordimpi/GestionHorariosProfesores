@@ -20,7 +20,7 @@ namespace DataAccess.Repositories.Implementations
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> DeletePrograma(int id)
+        public async Task<bool> DeletePrograma(int? id)
         {
             Programa programa = await _context.Programas.FindAsync(id);
             if (programa == null)
@@ -32,7 +32,7 @@ namespace DataAccess.Repositories.Implementations
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<Programa> GetProgramaById(int programaId)
+        public async Task<Programa> GetProgramaById(int? programaId)
         {
             Programa programa = await _context.Programas
                 .FirstOrDefaultAsync(p => p.Programa_Id == programaId);
@@ -41,9 +41,7 @@ namespace DataAccess.Repositories.Implementations
 
         public async Task<ICollection<Programa>> GetProgramas()
         {
-            return await _context.Programas
-                .Where(p => p.IsActivo)
-                .ToListAsync();
+            return await _context.Programas.ToListAsync();
         }
 
         public async Task<bool> ModifyPrograma(Programa programa)
