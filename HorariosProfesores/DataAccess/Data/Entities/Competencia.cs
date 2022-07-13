@@ -23,5 +23,7 @@ namespace DataAccess.Data.Entities
 
         [JsonIgnore]
         public Programa Programa { get; set; }
+
+        public string Estado => IsActive ? "Activo" : "Desactivo";
     }
 }

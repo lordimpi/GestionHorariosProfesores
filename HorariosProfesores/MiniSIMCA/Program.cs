@@ -15,6 +15,8 @@ builder.Services.AddFlashMessage();
 builder.Services.AddTransient<SeedDb>();
 builder.Services.AddScoped<IProgramaRepository, ProgramaRepository>();
 builder.Services.AddScoped<IProgramaService, ProgramaService>();
+builder.Services.AddScoped<ICompetenciaRepository, CompetenciaRepository>();
+builder.Services.AddScoped<ICompetenciaService, CompetenciaService>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(o =>
 {

@@ -17,11 +17,11 @@ namespace MiniSIMCA.Controllers
         private readonly IFlashMessage _flashMessage;
         private readonly ApplicationDbContext _context;
 
-        public ProgramasController(IProgramaService service,ICompetenciaService competenciaService, IFlashMessage flashMessage,
-            ApplicationDbContext context)
+        public ProgramasController(IProgramaService service,ICompetenciaService competenciaService, 
+            IFlashMessage flashMessage, ApplicationDbContext context)
         {
             _programaService = service;
-            this._competenciaService = competenciaService;
+            _competenciaService = competenciaService;
             _flashMessage = flashMessage;
             _context = context;
         }
@@ -210,7 +210,7 @@ namespace MiniSIMCA.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditComptencia(int id, CompetenciaViewModel model)
+        public async Task<IActionResult> EditCompetencia(int id, CompetenciaViewModel model)
         {
             if (id != model.Competencia_Id)
             {
