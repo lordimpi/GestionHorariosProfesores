@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220710161613_AddIsActiveColumn")]
-    partial class AddIsActiveColumn
+    [Migration("20220713024323_AddCompetenciasTable")]
+    partial class AddCompetenciasTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -22,6 +22,30 @@ namespace DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("DataAccess.Data.Entities.Competencia", b =>
+                {
+                    b.Property<int>("Competencia_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Competencia_Id"), 1L, 1);
+
+                    b.Property<string>("Competencia_Nombre")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Competencia_Id");
+
+                    b.HasIndex("Competencia_Nombre", "Competencia_Id")
+                        .IsUnique();
+
+                    b.ToTable("Competencias");
+                });
 
             modelBuilder.Entity("DataAccess.Data.Entities.Programa", b =>
                 {
@@ -40,6 +64,9 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Programa_Id");
+
+                    b.HasIndex("Programa_Nombre")
+                        .IsUnique();
 
                     b.ToTable("Programas");
                 });

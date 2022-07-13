@@ -32,16 +32,20 @@ namespace DataAccess.Repositories.Implementations
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<Programa> GetProgramaById(int? programaId)
+        public async Task<Programa> GetProgramaById(int? id)
         {
             Programa programa = await _context.Programas
-                .FirstOrDefaultAsync(p => p.Programa_Id == programaId);
+                .Include(p => p.Competencias)
+                .FirstOrDefaultAsync(p => p.Programa_Id == id);
             return programa;
         }
 
         public async Task<ICollection<Programa>> GetProgramas()
         {
-            return await _context.Programas.ToListAsync();
+            List<Programa> lista = await _context.Programas
+                .Include(p => p.Competencias)
+                .ToListAsync();
+            return lista;
         }
 
         public async Task<bool> ModifyPrograma(Programa programa)

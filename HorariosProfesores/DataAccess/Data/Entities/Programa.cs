@@ -14,5 +14,12 @@ namespace DataAccess.Data.Entities
 
         [Display(Name = "Estado")]
         public bool IsActivo { get; set; }
+
+        public ICollection<Competencia> Competencias { get; set; }
+
+        [Display(Name = "Competencias")]
+        public int CompetenciasNumber => Competencias == null ? 0 : Competencias.Count;
+
+        public string Estate => IsActivo ? "Activo" : "No Activo";
     }
 }

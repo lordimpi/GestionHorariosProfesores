@@ -12,12 +12,12 @@ namespace DataAccess.Data
         }
 
         public DbSet<Programa> Programas { get; set; }
-
+        public DbSet<Competencia> Competencias { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.Entity<Programa>().HasIndex(p => p.Programa_Nombre).IsUnique();
-            //builder.Entity<Competencia>().HasIndex("Name", "CountryId").IsUnique();
+            builder.Entity<Competencia>().HasIndex("Competencia_Nombre", "Programa_Id").IsUnique();
         }
 
     }

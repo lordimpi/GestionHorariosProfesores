@@ -21,6 +21,30 @@ namespace DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("DataAccess.Data.Entities.Competencia", b =>
+                {
+                    b.Property<int>("Competencia_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Competencia_Id"), 1L, 1);
+
+                    b.Property<string>("Competencia_Nombre")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Competencia_Id");
+
+                    b.HasIndex("Competencia_Nombre", "Competencia_Id")
+                        .IsUnique();
+
+                    b.ToTable("Competencias");
+                });
+
             modelBuilder.Entity("DataAccess.Data.Entities.Programa", b =>
                 {
                     b.Property<int>("Programa_Id")

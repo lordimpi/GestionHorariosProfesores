@@ -14,14 +14,13 @@
             @Html.DisplayNameFor(model => model.IsActivo)
         </dt>
         <dd class="col-sm-10">
-            @if (Model.IsActivo)
-            {
-                @Html.Display("Activado")
-            }
-            else
-            {
-                @Html.Display("Desactivado")
-            }
+            @Html.DisplayFor(model => model.Estate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompetenciasNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompetenciasNumber)
         </dd>
     </dl>
 </div>

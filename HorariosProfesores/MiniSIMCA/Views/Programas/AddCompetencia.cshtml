@@ -1,0 +1,28 @@
+﻿@model MiniSIMCA.Models.CompetenciaViewModel
+
+@{
+    ViewData["Title"] = "Competencia";
+    Layout = null;
+}
+
+<flash dismissable="true" />
+
+<div class="container smfont">
+    <form asp-action="AddCompetencia" autocomplete="off" asp-route-id="@Model.Competencia_Id" onsubmit="return jQueryAjaxPost(this);">
+        <div class="box-body">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ProgramaId" />
+            <partial name="_Competencia" />
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
+            <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}
