@@ -18,17 +18,11 @@
 <hr />
 
 
-<partial name="_AddOrEditDialog" />
+@*<partial name="_AddOrEditDialog" />
 <partial name="_DeleteDialog" />
-
+*@
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-
-    <script src="~/js/showmodal.js"></script>
-
-    <script>
-        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Programas/DeleteCompetencia/', false);
-    </script>
 }

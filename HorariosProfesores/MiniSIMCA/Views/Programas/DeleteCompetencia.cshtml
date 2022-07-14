@@ -1,0 +1,21 @@
+﻿@model DataAccess.Data.Entities.Competencia
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Borrar</h1>
+
+<h3>¿Está seguro de borrar el registro?</h3>
+<div>
+
+    <partial name="_CompetenciaDetails"/>
+    
+    <form asp-action="DeleteCompetencia">
+        <input type="hidden" asp-for="Competencia_Id" />
+        <button type="submit" value="Delete" class="btn btn-danger">
+            <i class="fa-solid fa-circle-check"></i> Borrar
+        </button>
+        <a asp-action="Details" asp-route-id="@Model?.Programa.Programa_Id"  class="btn btn-success"><i class="fa-solid fa-circle-left"></i> Regresar</a>
+    </form>
+</div>
