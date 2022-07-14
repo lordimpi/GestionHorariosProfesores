@@ -20,7 +20,7 @@ builder.Services.AddScoped<ICompetenciaService, CompetenciaService>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(o =>
 {
-    o.UseSqlServer(builder.Configuration.GetConnectionString("SQL"));
+    o.UseSqlServer(builder.Configuration.GetConnectionString("Daniel"));
 });
 
 
