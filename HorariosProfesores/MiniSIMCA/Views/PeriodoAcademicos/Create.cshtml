@@ -1,0 +1,42 @@
+﻿@model DataAccess.Data.Entities.PeriodoAcademico
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Crear</h1>
+
+<h4>Periodo Academico</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Periodo_FechaInicio" class="control-label"></label>
+                <input asp-for="Periodo_FechaInicio" class="form-control" />
+                <span asp-validation-for="Periodo_FechaInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Periodo_FechaFin" class="control-label"></label>
+                <input asp-for="Periodo_FechaFin" class="form-control" />
+                <span asp-validation-for="Periodo_FechaFin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Periodo_Nombre" class="control-label"></label>
+                <input asp-for="Periodo_Nombre" class="form-control" />
+                <span asp-validation-for="Periodo_Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                </label>
+            </div>
+            <div class="form-group mt-2">
+                <input type="submit" value="Crear" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-secondary">Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>
+

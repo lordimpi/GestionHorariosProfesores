@@ -17,6 +17,8 @@ builder.Services.AddScoped<IProgramaRepository, ProgramaRepository>();
 builder.Services.AddScoped<IProgramaService, ProgramaService>();
 builder.Services.AddScoped<ICompetenciaRepository, CompetenciaRepository>();
 builder.Services.AddScoped<ICompetenciaService, CompetenciaService>();
+builder.Services.AddScoped<IPeriodoAcademicoRepository, PeriodoAcademicoRepository>();
+builder.Services.AddScoped<IPeriodoAcademicoService, PeriodoAcademicoService>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(o =>
 {

@@ -13,11 +13,14 @@ namespace DataAccess.Data
 
         public DbSet<Programa> Programas { get; set; }
         public DbSet<Competencia> Competencias { get; set; }
+        public DbSet<PeriodoAcademico> PeriodoAcademicos { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.Entity<Programa>().HasIndex(p => p.Programa_Nombre).IsUnique();
             builder.Entity<Competencia>().HasIndex("Competencia_Nombre", "Programa_Id").IsUnique();
+            builder.Entity<PeriodoAcademico>().HasIndex("Periodo_Nombre", "Periodo_Id").IsUnique();
         }
 
     }
