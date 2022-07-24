@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DataAccess.Data.Entities
 {
@@ -29,6 +24,7 @@ namespace DataAccess.Data.Entities
         public bool IsActive { get; set; }
 
         public ICollection<Programa> Programas { get; set; }
+        public ICollection<PeriodoAcademicoPrograma> PeriodoAcademicoProgramas { get; set; }
 
         public int CantidadProgramas => Programas == null ? 0 : Programas.Count;
 

@@ -7,7 +7,7 @@
 <h1>Periodos</h1>
 
 <p>
-    <a asp-action="Create">Nuevo Periodo Academico</a>
+    <a asp-action="Create" class="btn btn-primary">Nuevo Periodo Academico</a>
 </p>
 <table class="table">
     <thead>
@@ -16,13 +16,13 @@
                 @Html.DisplayNameFor(model => model.Periodo_Id)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Periodo_Nombre)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Periodo_FechaInicio)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Periodo_FechaFin)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Periodo_Nombre)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IsActive)
@@ -41,13 +41,13 @@
                     @Html.DisplayFor(modelItem => item.Periodo_Id)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Periodo_Nombre)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Periodo_FechaInicio)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Periodo_FechaFin)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Periodo_Nombre)
                 </td>
                 <td>
                     @if (item.IsActive)

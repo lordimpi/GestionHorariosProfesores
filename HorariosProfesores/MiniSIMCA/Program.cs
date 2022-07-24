@@ -4,6 +4,7 @@ using DataAccess.Repositories.Implementations;
 using Infrastructure.Services.Contracts;
 using Infrastructure.Services.Implementations;
 using Microsoft.EntityFrameworkCore;
+using MiniSIMCA.Helpers;
 using Vereyon.Web;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,9 @@ builder.Services.AddScoped<ICompetenciaRepository, CompetenciaRepository>();
 builder.Services.AddScoped<ICompetenciaService, CompetenciaService>();
 builder.Services.AddScoped<IPeriodoAcademicoRepository, PeriodoAcademicoRepository>();
 builder.Services.AddScoped<IPeriodoAcademicoService, PeriodoAcademicoService>();
+builder.Services.AddScoped<ICombosHelper, CombosHelper>();
+builder.Services.AddScoped<IDocenteRepository, DocenteRepository>();
+builder.Services.AddScoped<IDocenteService, DocenteService>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(o =>
 {

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
-    public partial class AddPeriodoAcademicoTable : Migration
+    public partial class AddPeriodoAcademicoPrgramaTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,10 +14,36 @@ namespace DataAccess.Migrations
                 table: "Competencias");
 
             migrationBuilder.AddColumn<int>(
+                name: "PeriodoAcademicoPeriodo_Id",
+                table: "Programas",
+                type: "int",
+                nullable: true);
+
+            migrationBuilder.AddColumn<int>(
                 name: "Programa_Id",
                 table: "Competencias",
                 type: "int",
                 nullable: true);
+
+            migrationBuilder.CreateTable(
+                name: "Docentes",
+                columns: table => new
+                {
+                    Docente_Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Docente_Nombres = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Docente_Apellidos = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Docente_TipoIdentificacion = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Docente_Identificacion = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Docente_Tipo = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Docente_TipoContrato = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Docente_Area = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Docentes", x => x.Docente_Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "PeriodoAcademicos",
@@ -36,28 +62,33 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PeriodoAcademicoPrograma",
+                name: "PeriodoAcademicoProgramas",
                 columns: table => new
                 {
-                    PeriodoAcademicosPeriodo_Id = table.Column<int>(type: "int", nullable: false),
-                    ProgramasPrograma_Id = table.Column<int>(type: "int", nullable: false)
+                    PeriodoAcademicoId = table.Column<int>(type: "int", nullable: false),
+                    ProgramaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PeriodoAcademicoPrograma", x => new { x.PeriodoAcademicosPeriodo_Id, x.ProgramasPrograma_Id });
+                    table.PrimaryKey("PK_PeriodoAcademicoProgramas", x => new { x.PeriodoAcademicoId, x.ProgramaId });
                     table.ForeignKey(
-                        name: "FK_PeriodoAcademicoPrograma_PeriodoAcademicos_PeriodoAcademicosPeriodo_Id",
-                        column: x => x.PeriodoAcademicosPeriodo_Id,
+                        name: "FK_PeriodoAcademicoProgramas_PeriodoAcademicos_PeriodoAcademicoId",
+                        column: x => x.PeriodoAcademicoId,
                         principalTable: "PeriodoAcademicos",
                         principalColumn: "Periodo_Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PeriodoAcademicoPrograma_Programas_ProgramasPrograma_Id",
-                        column: x => x.ProgramasPrograma_Id,
+                        name: "FK_PeriodoAcademicoProgramas_Programas_ProgramaId",
+                        column: x => x.ProgramaId,
                         principalTable: "Programas",
                         principalColumn: "Programa_Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Programas_PeriodoAcademicoPeriodo_Id",
+                table: "Programas",
+                column: "PeriodoAcademicoPeriodo_Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Competencias_Competencia_Nombre_Programa_Id",
@@ -72,14 +103,20 @@ namespace DataAccess.Migrations
                 column: "Programa_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PeriodoAcademicoPrograma_ProgramasPrograma_Id",
-                table: "PeriodoAcademicoPrograma",
-                column: "ProgramasPrograma_Id");
+                name: "IX_Docentes_Docente_Identificacion",
+                table: "Docentes",
+                column: "Docente_Identificacion",
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_PeriodoAcademicos_Periodo_Nombre_Periodo_Id",
+                name: "IX_PeriodoAcademicoProgramas_ProgramaId",
+                table: "PeriodoAcademicoProgramas",
+                column: "ProgramaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PeriodoAcademicos_Periodo_Nombre",
                 table: "PeriodoAcademicos",
-                columns: new[] { "Periodo_Nombre", "Periodo_Id" },
+                column: "Periodo_Nombre",
                 unique: true);
 
             migrationBuilder.AddForeignKey(
@@ -88,6 +125,13 @@ namespace DataAccess.Migrations
                 column: "Programa_Id",
                 principalTable: "Programas",
                 principalColumn: "Programa_Id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Programas_PeriodoAcademicos_PeriodoAcademicoPeriodo_Id",
+                table: "Programas",
+                column: "PeriodoAcademicoPeriodo_Id",
+                principalTable: "PeriodoAcademicos",
+                principalColumn: "Periodo_Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -96,11 +140,22 @@ namespace DataAccess.Migrations
                 name: "FK_Competencias_Programas_Programa_Id",
                 table: "Competencias");
 
+            migrationBuilder.DropForeignKey(
+                name: "FK_Programas_PeriodoAcademicos_PeriodoAcademicoPeriodo_Id",
+                table: "Programas");
+
             migrationBuilder.DropTable(
-                name: "PeriodoAcademicoPrograma");
+                name: "Docentes");
+
+            migrationBuilder.DropTable(
+                name: "PeriodoAcademicoProgramas");
 
             migrationBuilder.DropTable(
                 name: "PeriodoAcademicos");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Programas_PeriodoAcademicoPeriodo_Id",
+                table: "Programas");
 
             migrationBuilder.DropIndex(
                 name: "IX_Competencias_Competencia_Nombre_Programa_Id",
@@ -109,6 +164,10 @@ namespace DataAccess.Migrations
             migrationBuilder.DropIndex(
                 name: "IX_Competencias_Programa_Id",
                 table: "Competencias");
+
+            migrationBuilder.DropColumn(
+                name: "PeriodoAcademicoPeriodo_Id",
+                table: "Programas");
 
             migrationBuilder.DropColumn(
                 name: "Programa_Id",

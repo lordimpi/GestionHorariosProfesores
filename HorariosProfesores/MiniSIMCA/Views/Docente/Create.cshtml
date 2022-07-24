@@ -1,0 +1,67 @@
+﻿@model MiniSIMCA.Models.DocenteViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Crear</h1>
+
+<h4>Crear Docente</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Docente_Nombres" class="control-label"></label>
+                <input asp-for="Docente_Nombres" class="form-control" />
+                <span asp-validation-for="Docente_Nombres" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Docente_Apellidos" class="control-label"></label>
+                <input asp-for="Docente_Apellidos" class="form-control" />
+                <span asp-validation-for="Docente_Apellidos" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Docente_TipoIdentificacion" class="control-label"></label>
+                <input asp-for="Docente_TipoIdentificacion" class="form-control" />
+                <span asp-validation-for="Docente_TipoIdentificacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Docente_Identificacion" class="control-label"></label>
+                <input asp-for="Docente_Identificacion" class="form-control" />
+                <span asp-validation-for="Docente_Identificacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Docente_Tipo" class="control-label"></label>
+                <input asp-for="Docente_Tipo" class="form-control" />
+                <span asp-validation-for="Docente_Tipo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Docente_TipoContrato" class="control-label"></label>
+                <input asp-for="Docente_TipoContrato" class="form-control" />
+                <span asp-validation-for="Docente_TipoContrato" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Docente_Area" class="control-label"></label>
+                <input asp-for="Docente_Area" class="form-control" />
+                <span asp-validation-for="Docente_Area" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

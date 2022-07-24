@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220720185759_AddPeriodoAcademicoTable")]
-    partial class AddPeriodoAcademicoTable
+    [Migration("20220724214047_AddPeriodoAcademicoPrgramaTable")]
+    partial class AddPeriodoAcademicoPrgramaTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,6 +54,60 @@ namespace DataAccess.Migrations
                     b.ToTable("Competencias");
                 });
 
+            modelBuilder.Entity("DataAccess.Data.Entities.Docente", b =>
+                {
+                    b.Property<int>("Docente_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Docente_Id"), 1L, 1);
+
+                    b.Property<string>("Docente_Apellidos")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Docente_Area")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Docente_Identificacion")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Docente_Nombres")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Docente_Tipo")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Docente_TipoContrato")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Docente_TipoIdentificacion")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Docente_Id");
+
+                    b.HasIndex("Docente_Identificacion")
+                        .IsUnique();
+
+                    b.ToTable("Docentes");
+                });
+
             modelBuilder.Entity("DataAccess.Data.Entities.PeriodoAcademico", b =>
                 {
                     b.Property<int>("Periodo_Id")
@@ -78,10 +132,25 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Periodo_Id");
 
-                    b.HasIndex("Periodo_Nombre", "Periodo_Id")
+                    b.HasIndex("Periodo_Nombre")
                         .IsUnique();
 
                     b.ToTable("PeriodoAcademicos");
+                });
+
+            modelBuilder.Entity("DataAccess.Data.Entities.PeriodoAcademicoPrograma", b =>
+                {
+                    b.Property<int>("PeriodoAcademicoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProgramaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PeriodoAcademicoId", "ProgramaId");
+
+                    b.HasIndex("ProgramaId");
+
+                    b.ToTable("PeriodoAcademicoProgramas");
                 });
 
             modelBuilder.Entity("DataAccess.Data.Entities.Programa", b =>
@@ -95,6 +164,9 @@ namespace DataAccess.Migrations
                     b.Property<bool>("IsActivo")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("PeriodoAcademicoPeriodo_Id")
+                        .HasColumnType("int");
+
                     b.Property<string>("Programa_Nombre")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -102,25 +174,12 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Programa_Id");
 
+                    b.HasIndex("PeriodoAcademicoPeriodo_Id");
+
                     b.HasIndex("Programa_Nombre")
                         .IsUnique();
 
                     b.ToTable("Programas");
-                });
-
-            modelBuilder.Entity("PeriodoAcademicoPrograma", b =>
-                {
-                    b.Property<int>("PeriodoAcademicosPeriodo_Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProgramasPrograma_Id")
-                        .HasColumnType("int");
-
-                    b.HasKey("PeriodoAcademicosPeriodo_Id", "ProgramasPrograma_Id");
-
-                    b.HasIndex("ProgramasPrograma_Id");
-
-                    b.ToTable("PeriodoAcademicoPrograma");
                 });
 
             modelBuilder.Entity("DataAccess.Data.Entities.Competencia", b =>
@@ -132,24 +191,44 @@ namespace DataAccess.Migrations
                     b.Navigation("Programa");
                 });
 
-            modelBuilder.Entity("PeriodoAcademicoPrograma", b =>
+            modelBuilder.Entity("DataAccess.Data.Entities.PeriodoAcademicoPrograma", b =>
                 {
-                    b.HasOne("DataAccess.Data.Entities.PeriodoAcademico", null)
-                        .WithMany()
-                        .HasForeignKey("PeriodoAcademicosPeriodo_Id")
+                    b.HasOne("DataAccess.Data.Entities.PeriodoAcademico", "PeriodoAcademico")
+                        .WithMany("PeriodoAcademicoProgramas")
+                        .HasForeignKey("PeriodoAcademicoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DataAccess.Data.Entities.Programa", null)
-                        .WithMany()
-                        .HasForeignKey("ProgramasPrograma_Id")
+                    b.HasOne("DataAccess.Data.Entities.Programa", "Programa")
+                        .WithMany("PeriodoAcademicoProgramas")
+                        .HasForeignKey("ProgramaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("PeriodoAcademico");
+
+                    b.Navigation("Programa");
+                });
+
+            modelBuilder.Entity("DataAccess.Data.Entities.Programa", b =>
+                {
+                    b.HasOne("DataAccess.Data.Entities.PeriodoAcademico", null)
+                        .WithMany("Programas")
+                        .HasForeignKey("PeriodoAcademicoPeriodo_Id");
+                });
+
+            modelBuilder.Entity("DataAccess.Data.Entities.PeriodoAcademico", b =>
+                {
+                    b.Navigation("PeriodoAcademicoProgramas");
+
+                    b.Navigation("Programas");
                 });
 
             modelBuilder.Entity("DataAccess.Data.Entities.Programa", b =>
                 {
                     b.Navigation("Competencias");
+
+                    b.Navigation("PeriodoAcademicoProgramas");
                 });
 #pragma warning restore 612, 618
         }

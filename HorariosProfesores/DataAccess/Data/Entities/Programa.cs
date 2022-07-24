@@ -17,7 +17,7 @@ namespace DataAccess.Data.Entities
 
         public ICollection<Competencia> Competencias { get; set; }
 
-        public ICollection<PeriodoAcademico> PeriodoAcademicos { get; set; }
+        public ICollection<PeriodoAcademicoPrograma> PeriodoAcademicoProgramas { get; set; }
 
         [Display(Name = "Competencias")]
         public int CompetenciasNumber => Competencias == null ? 0 : Competencias.Count;
