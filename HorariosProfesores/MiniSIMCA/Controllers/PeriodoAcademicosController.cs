@@ -1,6 +1,7 @@
 ﻿using DataAccess.Data;
 using DataAccess.Data.Entities;
 using Infrastructure.Services.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiniSIMCA.Helpers;
@@ -10,6 +11,7 @@ using static MiniSIMCA.Helpers.ModalHelper;
 
 namespace MiniSIMCA.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PeriodoAcademicosController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -28,16 +28,42 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Programas" asp-action="Index">Programas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="PeriodoAcademicos" asp-action="Index">Periodos Academicos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Docente" asp-action="Index">Docentes</a>
-                        </li>
 
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Programas" asp-action="Index">Programas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="PeriodoAcademicos" asp-action="Index">Periodos Academicos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Docente" asp-action="Index">Docentes</a>
+                            </li>
+                        }
+
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="" asp-action="">@User.Identity.Name</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Logout">
+                                    <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Login">
+                                    <i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

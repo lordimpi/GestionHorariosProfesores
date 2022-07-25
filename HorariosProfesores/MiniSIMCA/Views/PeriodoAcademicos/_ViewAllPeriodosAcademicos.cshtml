@@ -77,8 +77,13 @@
                     @Html.DisplayFor(modelItem => item.CantidadProgramas)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    <a asp-action="Update" asp-route-id="@item.Periodo_Id" class="btn btn-warning btn-sm">
+                        <i class="fa-solid fa-pencil"></i>
+                    </a>
+                    <button data-id="@item.Periodo_Id" class="btn btn-sm btn-danger deleteItem" data-bs-toggle="modal"
+                        data-bs-target="#deleteDialog">
+                        <i class="fa fa-trash"></i>
+                    </button>
                 </td>
             </tr>
         }

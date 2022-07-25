@@ -22,16 +22,18 @@
     </div>
 </div>
 
-@*<partial name="_AddOrEditDialog" />
-<partial name="_DeleteDialog" />*@
+@*<partial name="_AddOrEditDialog" />*@
+<partial name="_DeleteDialog" />
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 
     <script src="~/js/showmodal.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#PeriodosTable').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
@@ -44,7 +46,7 @@
         });
     </script>
 
-@*    <script>
-        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Programas/Delete/', false);
-    </script>*@
+    <script>
+        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/PeriodoAcademicos/Delete/', false);
+    </script>*
 }

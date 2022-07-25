@@ -1,7 +1,7 @@
 ﻿using DataAccess.Data;
 using DataAccess.Data.Entities;
-using DataAccess.Data.Enums;
 using Infrastructure.Services.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiniSIMCA.Helpers;
@@ -11,6 +11,7 @@ using static MiniSIMCA.Helpers.ModalHelper;
 
 namespace MiniSIMCA.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProgramasController : Controller
     {
         private readonly IProgramaService _programaService;
@@ -235,7 +236,7 @@ namespace MiniSIMCA.Controllers
                         Competencia_Nombre = model.Competencia_Nombre,
                         IsActive = model.IsActive,
                         Competencia_Tipo = model.TipoCompetencia
-                        
+
                     };
                     await _competenciaService.UdateCompetenciaAsync(competencia);
                     Programa programa = await _context.Programas

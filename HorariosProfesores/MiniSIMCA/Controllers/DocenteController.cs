@@ -1,11 +1,13 @@
 ﻿using DataAccess.Data.Entities;
 using Infrastructure.Services.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiniSIMCA.Models;
 
 namespace MiniSIMCA.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class DocenteController : Controller
     {
         private readonly IDocenteService _docenteService;
