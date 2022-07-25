@@ -22,7 +22,7 @@ namespace MiniSIMCA.Controllers
             _context = context;
             _periodoAcademicoService = periodoAcademicoService;
             _combosHelper = combosHelper;
-            this._flashMessage = flashMessage;
+            _flashMessage = flashMessage;
         }
 
         public async Task<IActionResult> Index()
@@ -176,6 +176,45 @@ namespace MiniSIMCA.Controllers
 
             model.Programas = await _combosHelper.GetComboProgramasAsync(programas);
             return Json(new { isValid = false, html = ModalHelper.RenderRazorViewToString(this, "AddPrograma", model) });
+        }
+
+        public async Task<IActionResult> DeletePrograma(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            PeriodoAcademicoPrograma periodoAcademicoPrograma = await _context.PeriodoAcademicoProgramas
+                .Include(pap => pap.PeriodoAcademico)
+                .FirstOrDefaultAsync(pa => pa.PeriodoAcademicoId == id);
+            if (periodoAcademicoPrograma == null)
+            {
+                return NotFound();
+            }
+
+            _context.PeriodoAcademicoProgramas.Remove(periodoAcademicoPrograma);
+            await _context.SaveChangesAsync();
+            _flashMessage.Info("Registro borrado.");
+            return RedirectToAction(nameof(Details), new { Id = periodoAcademicoPrograma.PeriodoAcademico.Periodo_Id });
+        }
+
+        [NoDirectAccess]
+        public async Task<IActionResult> Delete(int id)
+        {
+
+            PeriodoAcademico periodoAcademico = await _context.PeriodoAcademicos
+                .Include(pa => pa.PeriodoAcademicoProgramas)
+                .FirstOrDefaultAsync(pa => pa.Periodo_Id == id);
+            if (periodoAcademico == null)
+            {
+                return NotFound();
+            }
+
+            _context.PeriodoAcademicos.Remove(periodoAcademico);
+            await _context.SaveChangesAsync();
+            _flashMessage.Info("Registro borrado.");
+            return RedirectToAction(nameof(Index));
         }
     }
 }
