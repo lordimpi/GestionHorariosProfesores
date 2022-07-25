@@ -65,9 +65,21 @@ namespace MiniSIMCA.Controllers
                     await _periodoAcademicoService.CreatePeriodoAcamedicoAsync(periodo);
                     return RedirectToAction(nameof(Index));
                 }
-                catch (Exception e)
+                catch (DbUpdateException dbUpdateException)
                 {
-                    ModelState.AddModelError(string.Empty, $"Ha ocurrido un error: {e.Message}");
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe un programa con el mismo nombre.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                    return View(model);
                 }
             }
             model.Programas = await _combosHelper.GetComboProgramasAsync();

@@ -26,7 +26,8 @@ namespace DataAccess.Data.Entities
         public ICollection<Programa> Programas { get; set; }
         public ICollection<PeriodoAcademicoPrograma> PeriodoAcademicoProgramas { get; set; }
 
-        public int CantidadProgramas => Programas == null ? 0 : Programas.Count;
+        [Display(Name ="Cantidad Programas")]
+        public int CantidadProgramas => PeriodoAcademicoProgramas == null ? 0 : PeriodoAcademicoProgramas.Count;
 
         public string Estado => IsActive ? "Activo" : "Desactivo";
     }

@@ -23,6 +23,8 @@ namespace MiniSIMCA.Models
         [Display(Name = "Estado")]
         public bool IsActive { get; set; }
 
+        [Display(Name = "Programas")]
+        [Required(ErrorMessage ="Seleccione un programa")]
         public int Programa_Id { get; set; }
 
         public IEnumerable<SelectListItem> Programas { get; set; }

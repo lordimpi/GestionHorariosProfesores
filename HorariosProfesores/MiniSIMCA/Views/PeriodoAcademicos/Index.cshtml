@@ -4,82 +4,47 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Periodos</h1>
+<flash dismissable="true" />
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Nuevo Periodo Academico</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Periodo_Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Periodo_Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Periodo_FechaInicio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Periodo_FechaFin)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CantidadProgramas)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Periodo_Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Periodo_Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Periodo_FechaInicio)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Periodo_FechaFin)
-                </td>
-                <td>
-                    @if (item.IsActive)
-                    {
-                        <div>
-                            <input class="form-check-input" type="checkbox"
-                           id="flexCheckCheckedDisabled" checked disabled>
-                            <label class="form-check-label" for="flexCheckCheckedDisabled">
-                                Activo
-                            </label>
-                        </div>
-                    }
-                    else
-                    {
-                        <div>
-                            <input class="form-check-input" type="checkbox"
-                           id="flexCheckCheckedDisabled" disabled>
-                            <label class="form-check-label" for="flexCheckCheckedDisabled">
-                                Desactivo
-                            </label>
-                        </div>
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CantidadProgramas)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<h1>Periodos Academicos</h1>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="container-fluid">
+    <div class="card mt-2">
+        <div class="card-header text-success">
+            <i class="fa fa-book"></i>  <strong>Periodos Academicos</strong>
+        </div>
+        <div class="card-body">
+            <div id="view-all">
+                @await Html.PartialAsync("_ViewAllPeriodosAcademicos", Model)
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<partial name="_AddOrEditDialog" />
+<partial name="_DeleteDialog" />*@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="~/js/showmodal.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#PeriodosTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                "aLengthMenu": [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, "Todos"]
+                ]
+            });
+        });
+    </script>
+
+@*    <script>
+        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Programas/Delete/', false);
+    </script>*@
+}

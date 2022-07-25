@@ -1,0 +1,85 @@
+﻿@model IEnumerable<DataAccess.Data.Entities.PeriodoAcademico>
+
+<table class="table table-striped table-responsive-md table-bordered smfont" id="PeriodosTable">
+    <colgroup>
+        <col span="1" />
+        <col span="1" />
+        <col span="1" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Periodo_Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Periodo_Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Periodo_FechaInicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Periodo_FechaFin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CantidadProgramas)
+            </th>
+            <th>
+                <a asp-action="Create" class="btn btn-success btn-sm">
+                    <i class="fa fa-plus-circle"></i> Nuevo Periodo
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Periodo_Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Periodo_Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Periodo_FechaInicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Periodo_FechaFin)
+                </td>
+                <td>
+                    @if (item.IsActive)
+                    {
+                        <div>
+                            <input class="form-check-input" type="checkbox"
+                           id="flexCheckCheckedDisabled" checked disabled>
+                            <label class="form-check-label" for="flexCheckCheckedDisabled">
+                                Activo
+                            </label>
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            <input class="form-check-input" type="checkbox"
+                           id="flexCheckCheckedDisabled" disabled>
+                            <label class="form-check-label" for="flexCheckCheckedDisabled">
+                                Desactivo
+                            </label>
+                        </div>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CantidadProgramas)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,4 +1,5 @@
 ﻿using DataAccess.Data;
+using DataAccess.Data.Enums;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,6 +27,31 @@ namespace MiniSIMCA.Helpers
             list.Insert(0, new SelectListItem
             {
                 Text = "[Seleccione un Programa...]",
+                Value = "0"
+            });
+            return list;
+
+        }
+
+        public IEnumerable<SelectListItem> GetComboTipoCompetencia()
+        {
+
+            List<SelectListItem> list = new()
+            {
+                new SelectListItem()
+                {
+                    Text = "Generica",
+                    Value = $"{TipoCompetencia.Generica}"
+                },
+                new SelectListItem()
+                {
+                    Text = "Especifica",
+                    Value = $"{TipoCompetencia.Especifica}"
+                }
+            };
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione el tipo de competencia...]",
                 Value = "0"
             });
             return list;

@@ -23,8 +23,8 @@ namespace DataAccess.Data
             builder.Entity<Programa>().HasIndex(p => p.Programa_Nombre).IsUnique();
             builder.Entity<Competencia>().HasIndex("Competencia_Nombre", "Programa_Id").IsUnique();
             builder.Entity<PeriodoAcademico>().HasIndex(pa => pa.Periodo_Nombre).IsUnique();
-            builder.Entity<Docente>().HasIndex(d => d.Docente_Identificacion).IsUnique();
             builder.Entity<PeriodoAcademicoPrograma>().HasKey(pAp => new { pAp.PeriodoAcademicoId, pAp.ProgramaId });
+            builder.Entity<Docente>().HasIndex(d => d.Docente_Identificacion).IsUnique();
         }
 
     }

@@ -21,7 +21,25 @@ namespace DataAccess.Data
         {
             if (!_context.Programas.Any())
             {
-                _context.Programas.Add(new Programa { Programa_Nombre = "Ingenieria de Sistemas", IsActivo = true });
+                _context.Programas.Add(new Programa
+                {
+                    Programa_Nombre = "Ingenieria de Sistemas",
+                    IsActivo = true,
+                    Competencias = new List<Competencia>() {
+                    new Competencia { Competencia_Nombre = "Ingenieria de Sofware III",
+                        IsActive = true },
+                    new Competencia { Competencia_Nombre = "Ingenieria de Sofware II",
+                        IsActive = true },
+                    new Competencia { Competencia_Nombre = "Ingenieria de Sofware I",
+                        IsActive = true },
+                    new Competencia { Competencia_Nombre = "Introducción a la informática",
+                        IsActive = true },
+                    new Competencia { Competencia_Nombre = "Calculo 3",
+                        IsActive = true },
+                    new Competencia { Competencia_Nombre = "Bases de Datos II",
+                        IsActive = true }
+                    }
+                }) ;
                 _context.Programas.Add(new Programa { Programa_Nombre = "Ingenieria Automatica", IsActivo = true });
                 _context.Programas.Add(new Programa { Programa_Nombre = "Ingenieria Electronica", IsActivo = true });
                 _context.Programas.Add(new Programa { Programa_Nombre = "Ingenieria Civil", IsActivo = true });

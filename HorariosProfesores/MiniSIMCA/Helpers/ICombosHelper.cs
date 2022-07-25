@@ -5,5 +5,6 @@ namespace MiniSIMCA.Helpers
     public interface ICombosHelper
     {
         Task<IEnumerable<SelectListItem>> GetComboProgramasAsync();
+        IEnumerable<SelectListItem> GetComboTipoCompetencia();
     }
 }

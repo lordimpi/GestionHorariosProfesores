@@ -23,7 +23,7 @@ namespace DataAccess.Repositories.Implementations
         public async Task<ICollection<PeriodoAcademico>> GetAllPeriodosAcamedicosAsync()
         {
             List<PeriodoAcademico> periodoAcademicos = await _context.PeriodoAcademicos
-                .Include(pa => pa.Programas.Where(pg => pg.IsActivo == true))
+                .Include(pa => pa.PeriodoAcademicoProgramas)
                 .ToListAsync();
             return periodoAcademicos;
         }

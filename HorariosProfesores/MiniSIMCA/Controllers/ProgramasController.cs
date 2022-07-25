@@ -1,5 +1,6 @@
 ﻿using DataAccess.Data;
 using DataAccess.Data.Entities;
+using DataAccess.Data.Enums;
 using Infrastructure.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,14 +17,16 @@ namespace MiniSIMCA.Controllers
         private readonly ICompetenciaService _competenciaService;
         private readonly IFlashMessage _flashMessage;
         private readonly ApplicationDbContext _context;
+        private readonly ICombosHelper _combosHelper;
 
-        public ProgramasController(IProgramaService service,ICompetenciaService competenciaService, 
-            IFlashMessage flashMessage, ApplicationDbContext context)
+        public ProgramasController(IProgramaService service, ICompetenciaService competenciaService,
+            IFlashMessage flashMessage, ApplicationDbContext context, ICombosHelper combosHelper)
         {
             _programaService = service;
             _competenciaService = competenciaService;
             _flashMessage = flashMessage;
             _context = context;
+            _combosHelper = combosHelper;
         }
 
         #region Programas
@@ -141,6 +144,7 @@ namespace MiniSIMCA.Controllers
             CompetenciaViewModel model = new()
             {
                 ProgramaId = programa.Programa_Id,
+                TipoCompetencias = _combosHelper.GetComboTipoCompetencia()
             };
 
             return View(model);
@@ -158,7 +162,8 @@ namespace MiniSIMCA.Controllers
                     {
                         Programa = await _context.Programas.FindAsync(model.ProgramaId),
                         Competencia_Nombre = model.Competencia_Nombre,
-                        IsActive = model.IsActive,
+                        Competencia_Tipo = model.TipoCompetencia,
+                        IsActive = model.IsActive
                     };
 
                     await _competenciaService.CreateCompetenciaAsync(competencia);
@@ -182,7 +187,7 @@ namespace MiniSIMCA.Controllers
                     ModelState.AddModelError(string.Empty, exception.Message);
                 }
             }
-
+            model.TipoCompetencias = _combosHelper.GetComboTipoCompetencia();
             return Json(new { isValid = false, html = ModalHelper.RenderRazorViewToString(this, "AddCompetencia", model) });
         }
 
@@ -202,7 +207,10 @@ namespace MiniSIMCA.Controllers
             {
                 ProgramaId = competencia.Programa.Programa_Id,
                 Competencia_Id = competencia.Competencia_Id,
-                Competencia_Nombre = competencia.Competencia_Nombre
+                Competencia_Nombre = competencia.Competencia_Nombre,
+                TipoCompetencia = competencia.Competencia_Tipo,
+                IsActive = competencia.IsActive,
+                TipoCompetencias = _combosHelper.GetComboTipoCompetencia()
             };
 
             return View(model);
@@ -225,7 +233,9 @@ namespace MiniSIMCA.Controllers
                     {
                         Competencia_Id = model.Competencia_Id,
                         Competencia_Nombre = model.Competencia_Nombre,
-                        IsActive = model.IsActive
+                        IsActive = model.IsActive,
+                        Competencia_Tipo = model.TipoCompetencia
+                        
                     };
                     await _competenciaService.UdateCompetenciaAsync(competencia);
                     Programa programa = await _context.Programas
@@ -252,6 +262,7 @@ namespace MiniSIMCA.Controllers
                     ModelState.AddModelError(string.Empty, exception.Message);
                 }
             }
+            model.TipoCompetencias = _combosHelper.GetComboTipoCompetencia();
             return Json(new { isValid = false, html = ModalHelper.RenderRazorViewToString(this, "EditCompetencia", model) });
         }
 

@@ -6,6 +6,11 @@
     <input asp-for="Competencia_Nombre" class="form-control" />
     <span asp-validation-for="Competencia_Nombre" class="text-danger"></span>
 </div>
+<div class="form-group">
+    <label asp-for="TipoCompetencia" class="control-label"></label>
+    <select asp-for="TipoCompetencia" asp-items="Model.TipoCompetencias" class="form-control"></select>
+    <span asp-validation-for="TipoCompetencia" class="text-danger"></span>
+</div>
 <div class="form-group mt-2">
     <div class="form-check">
         <input asp-for="IsActive" type="checkbox" class="form-check-input" />
