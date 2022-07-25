@@ -13,22 +13,22 @@ namespace Infrastructure.Services.Implementations
             _docenteRepository = docenteRepository;
         }
 
-        public Task<bool> CreateDocenteAsync(Docente docente)
+        public Task<bool> CreateDocenteAsync(User docente)
         {
             return _docenteRepository.CreateDocenteAsync(docente);
         }
 
-        public Task<ICollection<Docente>> GetAllDocentesAsync()
+        public Task<ICollection<User>> GetAllDocentesAsync()
         {
             return _docenteRepository.GetAllDocentesAsync();
         }
 
-        public Task<Docente> GetDocenteByIdAsync(int? id)
+        public Task<User> GetDocenteByIdAsync(int? id)
         {
             return _docenteRepository.GetDocenteByIdAsync(id);
         }
 
-        public Task<bool> UdateDocenteAsync(Docente docente)
+        public Task<bool> UdateDocenteAsync(User docente)
         {
             return _docenteRepository.UdateDocenteAsync(docente);
         }

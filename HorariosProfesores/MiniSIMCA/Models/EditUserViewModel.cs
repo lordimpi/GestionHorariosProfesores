@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DataAccess.Data.Entities
+namespace MiniSIMCA.Models
 {
-    public class Docente
+    public class EditUserViewModel
     {
-        [Key]
-        public int Docente_Id { get; set; }
+        public string Id { get; set; }
 
         [Display(Name = "Nombres")]
         [MaxLength(100, ErrorMessage = "El el máximo de caracteres es de {1}")]

@@ -1,8 +1,10 @@
 using DataAccess.Data;
+using DataAccess.Data.Entities;
 using DataAccess.Repositories.Contracts;
 using DataAccess.Repositories.Implementations;
 using Infrastructure.Services.Contracts;
 using Infrastructure.Services.Implementations;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MiniSIMCA.Helpers;
 using Vereyon.Web;
@@ -23,6 +25,18 @@ builder.Services.AddScoped<IPeriodoAcademicoService, PeriodoAcademicoService>();
 builder.Services.AddScoped<ICombosHelper, CombosHelper>();
 builder.Services.AddScoped<IDocenteRepository, DocenteRepository>();
 builder.Services.AddScoped<IDocenteService, DocenteService>();
+builder.Services.AddScoped<IUserHelper, UserHelper>();
+builder.Services.AddScoped<IUserHelperDA, UserHelperDA>();
+
+builder.Services.AddIdentity<User, IdentityRole>(cfg =>
+{
+    cfg.User.RequireUniqueEmail = true;
+    cfg.Password.RequireDigit = false;
+    cfg.Password.RequiredUniqueChars = 0;
+    cfg.Password.RequireLowercase = false;
+    cfg.Password.RequireNonAlphanumeric = false;
+    cfg.Password.RequireUppercase = false;
+}).AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(o =>
 {
@@ -57,7 +71,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

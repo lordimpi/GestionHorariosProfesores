@@ -14,25 +14,25 @@ namespace DataAccess.Repositories.Implementations
             _context = context;
         }
 
-        public async Task<bool> CreateDocenteAsync(Docente docente)
+        public async Task<bool> CreateDocenteAsync(User docente)
         {
             _context.Add(docente);
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<ICollection<Docente>> GetAllDocentesAsync()
+        public async Task<ICollection<User>> GetAllDocentesAsync()
         {
-            List<Docente> docentes = await _context.Docentes.ToListAsync();
+            List<User> docentes = await _context.Users.ToListAsync();
             return docentes;
         }
 
-        public async Task<Docente> GetDocenteByIdAsync(int? id)
+        public async Task<User> GetDocenteByIdAsync(int? id)
         {
-            Docente docente = await _context.Docentes.FindAsync(id);
+            User docente = await _context.Users.FindAsync(id);
             return docente;
         }
 
-        public async Task<bool> UdateDocenteAsync(Docente docente)
+        public async Task<bool> UdateDocenteAsync(User docente)
         {
             _context.Entry(docente).State = EntityState.Modified;
             return await _context.SaveChangesAsync() > 0;
@@ -40,7 +40,7 @@ namespace DataAccess.Repositories.Implementations
 
         public async Task<bool> DeleteDocenteByIdAsync(int? id)
         {
-            Docente docente = await _context.Docentes.FindAsync(id);
+            User docente = await _context.Users.FindAsync(id);
             if (docente == null)
             {
                 return false;

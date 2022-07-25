@@ -4,10 +4,10 @@ namespace Infrastructure.Services.Contracts
 {
     public interface IDocenteService
     {
-        Task<ICollection<Docente>> GetAllDocentesAsync();
-        Task<Docente> GetDocenteByIdAsync(int? id);
-        Task<bool> CreateDocenteAsync(Docente docente);
-        Task<bool> UdateDocenteAsync(Docente docente);
+        Task<ICollection<User>> GetAllDocentesAsync();
+        Task<User> GetDocenteByIdAsync(int? id);
+        Task<bool> CreateDocenteAsync(User docente);
+        Task<bool> UdateDocenteAsync(User docente);
         Task<bool> DeleteDocenteByIdAsync(int? id);
     }
 }

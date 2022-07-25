@@ -38,7 +38,7 @@ namespace MiniSIMCA.Controllers
                         return NotFound();
                     }
 
-                    Docente docente = new()
+                    User docente = new()
                     {
                         Docente_Apellidos = model.Docente_Apellidos,
                         Docente_Area = model.Docente_Area,
@@ -78,7 +78,7 @@ namespace MiniSIMCA.Controllers
             {
                 return NotFound();
             }
-            Docente docente = await _docenteService.GetDocenteByIdAsync(id);
+            User docente = await _docenteService.GetDocenteByIdAsync(id);
             DocenteViewModel model = new()
             {
                 Docente_Apellidos = docente.Docente_Apellidos,
@@ -106,7 +106,7 @@ namespace MiniSIMCA.Controllers
 
                 try
                 {
-                    Docente docente = await _docenteService.GetDocenteByIdAsync(id);
+                    User docente = await _docenteService.GetDocenteByIdAsync(id);
                     docente.Docente_TipoIdentificacion = model.Docente_TipoIdentificacion;
                     docente.Docente_Identificacion = model.Docente_Identificacion;
                     docente.IsActive = model.IsActive;
@@ -146,7 +146,7 @@ namespace MiniSIMCA.Controllers
             {
                 return NotFound();
             }
-            Docente docente = await _docenteService.GetDocenteByIdAsync(id);
+            User docente = await _docenteService.GetDocenteByIdAsync(id);
             if (docente == null)
             {
                 return NotFound();
@@ -161,7 +161,7 @@ namespace MiniSIMCA.Controllers
                 return NotFound();
             }
 
-            Docente docente = await _docenteService.GetDocenteByIdAsync(id);
+            User docente = await _docenteService.GetDocenteByIdAsync(id);
             if (docente == null)
             {
                 return NotFound();
