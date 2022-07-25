@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiniSIMCA.Helpers;
 using MiniSIMCA.Models;
+using Vereyon.Web;
+using static MiniSIMCA.Helpers.ModalHelper;
 
 namespace MiniSIMCA.Controllers
 {
@@ -13,12 +15,14 @@ namespace MiniSIMCA.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IPeriodoAcademicoService _periodoAcademicoService;
         private readonly ICombosHelper _combosHelper;
+        private readonly IFlashMessage _flashMessage;
 
-        public PeriodoAcademicosController(ApplicationDbContext context, IPeriodoAcademicoService periodoAcademicoService, ICombosHelper combosHelper)
+        public PeriodoAcademicosController(ApplicationDbContext context, IPeriodoAcademicoService periodoAcademicoService, ICombosHelper combosHelper, IFlashMessage flashMessage)
         {
             _context = context;
             _periodoAcademicoService = periodoAcademicoService;
             _combosHelper = combosHelper;
+            this._flashMessage = flashMessage;
         }
 
         public async Task<IActionResult> Index()
@@ -86,6 +90,92 @@ namespace MiniSIMCA.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            PeriodoAcademico periodoAcademico = await _periodoAcademicoService.GetPeriodoAcamedicoByIdAsync(id);
+            if (periodoAcademico == null)
+            {
+                return NotFound();
+            }
+            return View(periodoAcademico);
+        }
 
+        [NoDirectAccess]
+        public async Task<IActionResult> AddPrograma(int id)
+        {
+            PeriodoAcademico periodoAcademico = await _context.PeriodoAcademicos
+                .Include(pa => pa.PeriodoAcademicoProgramas)
+                .ThenInclude(pap => pap.Programa)
+                .FirstOrDefaultAsync(pa => pa.Periodo_Id == id);
+            if (periodoAcademico == null)
+            {
+                return NotFound();
+            }
+
+            List<Programa> programas = periodoAcademico.PeriodoAcademicoProgramas.Select(p => new Programa
+            {
+                Programa_Id = p.Programa.Programa_Id,
+                Programa_Nombre = p.Programa.Programa_Nombre,
+            }).ToList();
+
+            AddPeriodoAcademicoViewModel model = new()
+            {
+                PeriodoId = periodoAcademico.Periodo_Id,
+                Programas = await _combosHelper.GetComboProgramasAsync(programas),
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddPrograma(AddPeriodoAcademicoViewModel model)
+        {
+            PeriodoAcademico periodoAcademico = await _context.PeriodoAcademicos
+                 .Include(pa => pa.PeriodoAcademicoProgramas)
+                 .ThenInclude(pap => pap.Programa)
+                 .FirstOrDefaultAsync(pa => pa.Periodo_Id == model.PeriodoId);
+
+            if (ModelState.IsValid)
+            {
+                PeriodoAcademicoPrograma periodoAcademicoPrograma = new()
+                {
+                    Programa = await _context.Programas.FindAsync(model.ProgramaId),
+                    PeriodoAcademico = periodoAcademico,
+                };
+
+                try
+                {
+                    _context.Add(periodoAcademicoPrograma);
+                    await _context.SaveChangesAsync();
+                    _flashMessage.Confirmation("Programa agregado.");
+                    return Json(new
+                    {
+                        isValid = true,
+                        html = ModalHelper.RenderRazorViewToString(this, "Details", _context.PeriodoAcademicos
+                                        .Include(p => p.PeriodoAcademicoProgramas)
+                                        .ThenInclude(pap => pap.Programa)
+                                        .FirstOrDefaultAsync(p => p.Periodo_Id == model.ProgramaId))
+                    });
+                }
+                catch (Exception exception)
+                {
+                    _flashMessage.Danger(exception.Message);
+                }
+            }
+
+            List<Programa> programas = periodoAcademico.PeriodoAcademicoProgramas.Select(pap => new Programa
+            {
+                Programa_Id = pap.Programa.Programa_Id,
+                Programa_Nombre = pap.Programa.Programa_Nombre
+            }).ToList();
+
+            model.Programas = await _combosHelper.GetComboProgramasAsync(programas);
+            return Json(new { isValid = false, html = ModalHelper.RenderRazorViewToString(this, "AddPrograma", model) });
+        }
     }
 }

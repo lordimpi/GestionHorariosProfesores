@@ -41,7 +41,9 @@
                     @Html.DisplayFor(modelItem => item.Periodo_Id)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Periodo_Nombre)
+                    <a asp-action="Details" asp-controller="PeriodoAcademicos" asp-route-id="@item.Periodo_Id">
+                        @Html.DisplayFor(modelItem => item.Periodo_Nombre)
+                    </a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Periodo_FechaInicio)
@@ -76,7 +78,6 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                     @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                 </td>
             </tr>

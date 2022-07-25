@@ -1,0 +1,64 @@
+﻿@model DataAccess.Data.Entities.PeriodoAcademico
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalles</h1>
+
+<div>
+    <partial name="_PeriodoAcademicoDetails" />
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="fa-solid fa-arrow-rotate-left"></i> Regresar
+    </a>
+</div>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="row">
+    <div class="col">
+        <div class="container-fluid">
+            <div class="card mt-2">
+                <div class="card-header text-danger">
+                    <i class="fa fa-file-book"></i>  <strong>Programas</strong>
+                </div>
+                <div class="card-body">
+                    <div id="view-all">
+                        @await Html.PartialAsync("_ViewAllProgramas", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<partial name="_AddOrEditDialog" />
+<partial name="_DeleteDialog" />
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="~/js/showmodal.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#ProgramasTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                "aLengthMenu": [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, "Todos"]
+                ]
+            });
+        });
+    </script>
+
+    <script>
+        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Libro/DeleteImage/', false);
+    </script>
+}

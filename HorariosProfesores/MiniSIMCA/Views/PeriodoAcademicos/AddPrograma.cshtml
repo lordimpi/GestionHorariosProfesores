@@ -1,0 +1,33 @@
+﻿@model MiniSIMCA.Models.AddPeriodoAcademicoViewModel
+
+@{
+    ViewData["Title"] = "Programa";
+    Layout = null;
+}
+
+<flash dismissable="true" />
+
+<div class="container smfont">
+    <form asp-action="AddPrograma" enctype="multipart/form-data" autocomplete="off" asp-route-id="@Model.PeriodoId" onsubmit="return jQueryAjaxPost(this);">
+        <div class="box-body">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PeriodoId" />
+            <input type="hidden" asp-for="Programas" />
+            <div class="form-group">
+                <label asp-for="ProgramaId" class="control-label"></label>
+                <select asp-for="ProgramaId" asp-items="Model.Programas" class="form-control"></select>
+                <span asp-validation-for="ProgramaId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
+            <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

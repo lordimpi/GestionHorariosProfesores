@@ -24,14 +24,17 @@ namespace DataAccess.Repositories.Implementations
         {
             List<PeriodoAcademico> periodoAcademicos = await _context.PeriodoAcademicos
                 .Include(pa => pa.PeriodoAcademicoProgramas)
+                .ThenInclude(pap => pap.Programa)
                 .ToListAsync();
             return periodoAcademicos;
         }
 
         public async Task<PeriodoAcademico> GetPeriodoAcamedicoByIdAsync(int? id)
         {
-            PeriodoAcademico periodoAcademico = await _context
-                .PeriodoAcademicos.FirstOrDefaultAsync(pa => pa.Periodo_Id == id);
+            PeriodoAcademico periodoAcademico = await _context.PeriodoAcademicos
+                .Include(pa => pa.PeriodoAcademicoProgramas)
+                .ThenInclude(pap => pap.Programa)
+                .FirstOrDefaultAsync(pa => pa.Periodo_Id == id);
             return periodoAcademico;
         }
 

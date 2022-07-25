@@ -1,0 +1,31 @@
+﻿@model DataAccess.Data.Entities.PeriodoAcademico
+
+<table class="table table-striped table-responsive-md table-bordered smfont" id="ProgramasTable">
+    <colgroup>
+        <col span="1" />
+        <col span="1" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PeriodoAcademicoProgramas.FirstOrDefault().Programa.Programa_Nombre)
+            </th>
+            <th>
+                <a onclick="showInPopup('@Url.Action("AddPrograma", "PeriodoAcademicos", new { Id = Model.Periodo_Id }, Context.Request.Scheme)' , 'Nuevo Programa')" class="btn btn-sm btn-primary text-white"><i class="fa fa-plus-circle"></i> Programa</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PeriodoAcademicoProgramas)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Programa.Programa_Nombre)
+                </td>
+                <td>
+                    <button data-id="@item.ProgramaId" class="btn btn-sm btn-danger deleteItem2" data-bs-toggle="modal" data-bs-target="#deleteDialog"><i class="fa fa-trash"></i></button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

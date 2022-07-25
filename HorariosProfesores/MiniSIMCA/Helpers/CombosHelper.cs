@@ -1,4 +1,5 @@
 ﻿using DataAccess.Data;
+using DataAccess.Data.Entities;
 using DataAccess.Data.Enums;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,31 @@ namespace MiniSIMCA.Helpers
             return list;
 
         }
+
+        public async Task<IEnumerable<SelectListItem>> GetComboProgramasAsync(IEnumerable<Programa> filter)
+        {
+            List<Programa> programas = await _context.Programas.ToListAsync();
+            List<Programa> programasFiltered = new();
+            foreach (Programa programa in programas)
+            {
+                if (!filter.Any(p => p.Programa_Id == programa.Programa_Id))
+                {
+                    programasFiltered.Add(programa);
+                }
+            }
+
+            List<SelectListItem> list = programasFiltered.Select(p => new SelectListItem
+            {
+                Text = p.Programa_Nombre,
+                Value = p.Programa_Id.ToString()
+            })
+                .OrderBy(p => p.Text)
+                .ToList();
+
+            list.Insert(0, new SelectListItem { Text = "[Seleccione un programa...", Value = "0" });
+            return list;
+        }
+
 
         public IEnumerable<SelectListItem> GetComboTipoCompetencia()
         {
