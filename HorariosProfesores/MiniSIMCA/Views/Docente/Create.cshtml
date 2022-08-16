@@ -4,55 +4,88 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Crear</h1>
-
 <h4>Crear Docente</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="TipoContratos" />
+            <input type="hidden" asp-for="TipoDocentes" />
+            <input type="hidden" asp-for="TiposIdentificacion" />
+
             <div class="form-group">
-                <label asp-for="Docente_Nombres" class="control-label"></label>
-                <input asp-for="Docente_Nombres" class="form-control" />
-                <span asp-validation-for="Docente_Nombres" class="text-danger"></span>
+                <label asp-for="Docente_Email" class="control-label"></label>
+                <input asp-for="Docente_Email" class="form-control" />
+                <span asp-validation-for="Docente_Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Docente_Apellidos" class="control-label"></label>
-                <input asp-for="Docente_Apellidos" class="form-control" />
-                <span asp-validation-for="Docente_Apellidos" class="text-danger"></span>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Docente_Password" class="control-label"></label>
+                        <input asp-for="Docente_Password" class="form-control" />
+                        <span asp-validation-for="Docente_Password" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Docente_PasswordConfirm" class="control-label"></label>
+                        <input asp-for="Docente_PasswordConfirm" class="form-control" />
+                        <span asp-validation-for="Docente_PasswordConfirm" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Docente_TipoIdentificacion" class="control-label"></label>
-                <input asp-for="Docente_TipoIdentificacion" class="form-control" />
-                <span asp-validation-for="Docente_TipoIdentificacion" class="text-danger"></span>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-2">
+                        <label asp-for="Docente_Nombres" class="control-label"></label>
+                        <input asp-for="Docente_Nombres" class="form-control" />
+                        <span asp-validation-for="Docente_Nombres" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-2">
+                        <label asp-for="Docente_Apellidos" class="control-label"></label>
+                        <input asp-for="Docente_Apellidos" class="form-control" />
+                        <span asp-validation-for="Docente_Apellidos" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-2">
+                        <label asp-for="TipoIdentificacionId" class="control-label"></label>
+                        <select asp-for="TipoIdentificacionId" asp-items="Model.TiposIdentificacion" class="form-control"></select>
+                        <span asp-validation-for="TipoIdentificacionId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-2">
+                        <label asp-for="Docente_Identificacion" class="control-label"></label>
+                        <input asp-for="Docente_Identificacion" class="form-control" />
+                        <span asp-validation-for="Docente_Identificacion" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-2">
+                        <label asp-for="TipoDocenteId" class="control-label"></label>
+                        <select asp-for="TipoDocenteId" asp-items="Model.TipoDocentes" class="form-control"></select>
+                        <span asp-validation-for="TipoDocenteId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-2">
+                        <label asp-for="ContratoId" class="control-label"></label>
+                        <select asp-for="ContratoId" asp-items="Model.TipoContratos" class="form-control"></select>
+                        <span asp-validation-for="ContratoId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-2">
+                        <label asp-for="Docente_Area" class="control-label"></label>
+                        <input asp-for="Docente_Area" class="form-control" />
+                        <span asp-validation-for="Docente_Area" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check mt-2">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                        </label>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Docente_Identificacion" class="control-label"></label>
-                <input asp-for="Docente_Identificacion" class="form-control" />
-                <span asp-validation-for="Docente_Identificacion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Docente_Tipo" class="control-label"></label>
-                <input asp-for="Docente_Tipo" class="form-control" />
-                <span asp-validation-for="Docente_Tipo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Docente_TipoContrato" class="control-label"></label>
-                <input asp-for="Docente_TipoContrato" class="form-control" />
-                <span asp-validation-for="Docente_TipoContrato" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Docente_Area" class="control-label"></label>
-                <input asp-for="Docente_Area" class="form-control" />
-                <span asp-validation-for="Docente_Area" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
-                </label>
-            </div>
-            <div class="form-group">
+
+            <div class="form-group mt-2">
                 <input type="submit" value="Crear" class="btn btn-primary" />
                 <a asp-action="Index" class="btn btn-secondary">Regresar</a>
             </div>

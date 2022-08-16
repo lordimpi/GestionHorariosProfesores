@@ -75,7 +75,7 @@ namespace MiniSIMCA.Controllers
                     return View(model);
                 }
 
-                LoginViewModel loginViewModel = new LoginViewModel
+                LoginViewModel loginViewModel = new()
                 {
                     Password = model.Password,
                     RememberMe = false,

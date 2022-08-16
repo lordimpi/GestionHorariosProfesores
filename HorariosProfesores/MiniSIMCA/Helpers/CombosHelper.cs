@@ -15,6 +15,54 @@ namespace MiniSIMCA.Helpers
             _context = context;
         }
 
+        public IEnumerable<SelectListItem> GetComboArea()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<SelectListItem> GetComboDiasSemana()
+        {
+            List<SelectListItem> list = new()
+            {
+                new SelectListItem()
+                {
+                    Text = "Lunes",
+                    Value = DiaSemana.Lunes.ToString()
+                },
+                new SelectListItem()
+                {
+                    Text = "Martes",
+                    Value = DiaSemana.Martes.ToString()
+                },
+                new SelectListItem()
+                {
+                    Text = "Miercoles",
+                    Value = DiaSemana.Miercoles.ToString()
+                },
+                new SelectListItem()
+                {
+                    Text = "Jueves",
+                    Value = DiaSemana.Jueves.ToString()
+                },
+                new SelectListItem()
+                {
+                    Text = "Viernes",
+                    Value = DiaSemana.Viernes.ToString()
+                },
+                new SelectListItem()
+                {
+                    Text = "Sabado",
+                    Value = DiaSemana.Sabado.ToString()
+                }
+            };
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione el tipo de competencia...]",
+                Value = "0"
+            });
+            return list;
+        }
+
         public async Task<IEnumerable<SelectListItem>> GetComboProgramasAsync()
         {
 
@@ -58,7 +106,6 @@ namespace MiniSIMCA.Helpers
             return list;
         }
 
-
         public IEnumerable<SelectListItem> GetComboTipoCompetencia()
         {
 
@@ -82,6 +129,90 @@ namespace MiniSIMCA.Helpers
             });
             return list;
 
+        }
+
+        public IEnumerable<SelectListItem> GetComboTipoContrato()
+        {
+            List<SelectListItem> list = new()
+            {
+                new SelectListItem()
+                {
+                    Text = "Planta",
+                    Value = $"{TipoContrato.Planta}"
+                },
+                new SelectListItem()
+                {
+                    Text = "Contratista",
+                    Value = $"{TipoContrato.Contratista}"
+                },
+            };
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione el tipo de contrato...]",
+                Value = "0"
+            });
+            return list;
+        }
+
+        public IEnumerable<SelectListItem> GetComboTipoDocente()
+        {
+            List<SelectListItem> list = new()
+            {
+                new SelectListItem()
+                {
+                    Text = "Profesional",
+                    Value = $"{TipoDocente.Profesional}"
+                },
+                new SelectListItem()
+                {
+                    Text = "Técnico",
+                    Value = $"{TipoDocente.Tecnico}"
+                },
+            };
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione el tipo de docente...]",
+                Value = "0"
+            });
+            return list;
+        }
+
+        public IEnumerable<SelectListItem> GetComboTipoIdentificacion()
+        {
+            List<SelectListItem> list = new()
+            {
+                new SelectListItem()
+                {
+                    Text = "Cédula de ciudadanía",
+                    Value = $"{TipoIdentificacion.Cedula}"
+                },
+                new SelectListItem()
+                {
+                    Text = "Cédula de extranjería",
+                    Value = $"{TipoIdentificacion.CedulaDelExterior}"
+                },
+                new SelectListItem()
+                {
+                    Text = "Pasaporte",
+                    Value = $"{TipoIdentificacion.Pasaporte}"
+                },
+                new SelectListItem()
+                {
+                    Text = "Tarjeta de identidad",
+                    Value = $"{TipoIdentificacion.TarjetaIdentidad}"
+                },
+                new SelectListItem()
+                {
+                    Text = "Licencia de conducción",
+                    Value = $"{TipoIdentificacion.LicenciaDeConduccion}"
+                },
+            };
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione el tipo de documento...]",
+                Value = "0"
+            });
+            return list;
         }
     }
 }

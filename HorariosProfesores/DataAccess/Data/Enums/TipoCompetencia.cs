@@ -8,7 +8,7 @@ namespace DataAccess.Data.Enums
 {
     public enum TipoCompetencia
     {
-        Generica,
-        Especifica
+        Generica = 1, 
+        Especifica = 2
     }
 }

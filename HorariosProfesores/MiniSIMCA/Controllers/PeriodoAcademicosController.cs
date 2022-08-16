@@ -3,6 +3,7 @@ using DataAccess.Data.Entities;
 using Infrastructure.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MiniSIMCA.Helpers;
 using MiniSIMCA.Models;
@@ -89,6 +90,65 @@ namespace MiniSIMCA.Controllers
                 }
             }
             model.Programas = await _combosHelper.GetComboProgramasAsync();
+            return View(model);
+        }
+
+        public async Task<IActionResult> Update(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            PeriodoAcademico periodoAcademico = await _periodoAcademicoService.GetPeriodoAcamedicoByIdAsync(id);
+            EditPeriodoAcademicoViewModel model = new()
+            {
+                IsActive = periodoAcademico.IsActive,
+                Periodo_FechaFin = periodoAcademico.Periodo_FechaFin,
+                Periodo_FechaInicio = periodoAcademico.Periodo_FechaInicio,
+                Periodo_Nombre = periodoAcademico.Periodo_Nombre,
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(int? id, EditPeriodoAcademicoViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+                try
+                {
+                    PeriodoAcademico periodoAcademico = await _periodoAcademicoService.GetPeriodoAcamedicoByIdAsync(id);
+
+                    periodoAcademico.Periodo_Nombre = model.Periodo_Nombre;
+                    periodoAcademico.Periodo_FechaInicio = model.Periodo_FechaInicio;
+                    periodoAcademico.Periodo_FechaFin = model.Periodo_FechaFin;
+                    periodoAcademico.IsActive = model.IsActive;
+
+                    await _periodoAcademicoService.UpdatePeriodoAcamedicoAsync(periodoAcademico);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe un periodo con el mismo nombre.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                    return View(model);
+                }
+            }
             return View(model);
         }
 
@@ -205,17 +265,14 @@ namespace MiniSIMCA.Controllers
         public async Task<IActionResult> Delete(int id)
         {
 
-            PeriodoAcademico periodoAcademico = await _context.PeriodoAcademicos
-                .Include(pa => pa.PeriodoAcademicoProgramas)
-                .FirstOrDefaultAsync(pa => pa.Periodo_Id == id);
+            PeriodoAcademico periodoAcademico = await _periodoAcademicoService.GetPeriodoAcamedicoByIdAsync(id);
             if (periodoAcademico == null)
             {
                 return NotFound();
             }
 
-            _context.PeriodoAcademicos.Remove(periodoAcademico);
-            await _context.SaveChangesAsync();
-            _flashMessage.Info("Registro borrado.");
+            await _periodoAcademicoService.DeletePeriodoAcamedicoByIdAsync(id);
+            _flashMessage.Info("Registro Desactivado.");
             return RedirectToAction(nameof(Index));
         }
     }

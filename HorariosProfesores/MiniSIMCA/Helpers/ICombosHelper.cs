@@ -8,5 +8,10 @@ namespace MiniSIMCA.Helpers
         Task<IEnumerable<SelectListItem>> GetComboProgramasAsync();
         Task<IEnumerable<SelectListItem>> GetComboProgramasAsync(IEnumerable<Programa> filter);
         IEnumerable<SelectListItem> GetComboTipoCompetencia();
+        IEnumerable<SelectListItem> GetComboDiasSemana();
+        IEnumerable<SelectListItem> GetComboTipoIdentificacion();
+        IEnumerable<SelectListItem> GetComboTipoDocente();
+        IEnumerable<SelectListItem> GetComboTipoContrato();
+        IEnumerable<SelectListItem> GetComboArea();
     }
 }
