@@ -77,5 +77,74 @@ namespace MiniSIMCA.Controllers
             model.TipoAmbientes = _combosHelper.GetComboTipoAmbiente();
             return View(model);
         }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Ambiente ambiente = await _ambienteService.GetAmbienteByIdAsync(id);
+            if (ambiente == null)
+            {
+                return NotFound();
+            }
+
+            AmbienteViewModel model = new()
+            {
+                Capacidad = ambiente.Capacidad,
+                Id = ambiente.Id,
+                Nombre = ambiente.Nombre,
+                TipoAmbiente = ambiente.TipoAmbiente,
+                TipoAmbientes = _combosHelper.GetComboTipoAmbiente(),
+                Ubicacion = ambiente.Ubicacion,
+                IsActive = ambiente.IsActive,
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int? id, AmbienteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+                try
+                {
+                    Ambiente ambiente = await _ambienteService.GetAmbienteByIdAsync(id);
+                    ambiente.TipoAmbiente = model.TipoAmbiente;
+                    ambiente.Ubicacion = model.Ubicacion;
+                    ambiente.Capacidad = model.Capacidad;
+                    ambiente.Nombre = model.Nombre;
+                    ambiente.TipoAmbiente = model.TipoAmbiente;
+                    ambiente.IsActive = model.IsActive;
+
+                    await _ambienteService.UdateAmbienteAsync(ambiente);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe un ambiente con el mismo nombre.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                    return View(model);
+                }
+            }
+            model.TipoAmbientes = _combosHelper.GetComboTipoAmbiente();
+            return View(model);
+        }
     }
 }

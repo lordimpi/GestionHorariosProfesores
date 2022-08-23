@@ -14,6 +14,9 @@
                 @Html.DisplayNameFor(model => model.Competencias.FirstOrDefault().Competencia_Nombre)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Competencias.FirstOrDefault().Competencia_Tipo)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Competencias.FirstOrDefault().IsActive)
             </th>
             <th>
@@ -36,6 +39,9 @@
                         asp-route-Id="@item.Competencia_Id">
                         @Html.DisplayFor(modelItem => item.Competencia_Nombre)
                     </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Competencia_Tipo)
                 </td>
                 <td>
                      @if (item.IsActive)

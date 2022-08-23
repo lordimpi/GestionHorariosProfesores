@@ -58,10 +58,13 @@
                     @Html.DisplayFor(modelItem => item.IsActive)
                 </td>
                 <td>
-                    <a onclick="showInPopup('@Url.Action("AddOrEdit", "Ambiente", new { id=item.Id }, Context.Request.Scheme)' , 'Actualizar Ambiente')"
-                   class="btn btn-sm btn-warning">
-                        <i class="fa fa-pencil-alt"></i>
+                    <a class="btn btn-sm btn-warning" asp-route-id="@item.Id" asp-action="Edit">
+                        <i class="fa-solid fa-pencil"></i>
                     </a>
+              @*<a onclick="showInPopup('@Url.Action("AddOrEdit", "Ambiente", new { id=item.Id }, Context.Request.Scheme)' , 'Actualizar Ambiente')"
+                class="btn btn-sm btn-warning">
+                <i class="fa fa-pencil-alt"></i>
+                </a>*@
                     <button data-id="@item.Id" class="btn btn-sm btn-danger deleteItem" data-bs-toggle="modal"
                         data-bs-target="#deleteDialog">
                         <i class="fa fa-trash"></i>
