@@ -19,11 +19,52 @@ namespace DataAccess.Data
         {
             await _context.Database.EnsureCreatedAsync();
             await CheckProgramasAsync();
+            await CheckAmbienteAsync();
             await CheckRolesAsync();
 
             await CheckUserAsync("Santiago", "Acuña", "C.C", "1061752189", "Profesional", "PT", "Desarrollo de Software", true, "snt-26@hotmail.com", UserType.Admin);
             await CheckUserAsync("Camilo", "Daza", "C.C", "1066652189", "Profesional", "PT", "Desarrollo de Software", true, "daza@hotmail.com", UserType.Admin);
             await CheckUserAsync("docente1", "docente1", "C.C", "1061894903", "Tecnico", "CNT", "Gastronomia", true, "docente1@yopmail.com", UserType.User);
+        }
+
+        private async Task CheckAmbienteAsync()
+        {
+            if (!_context.Ambientes.Any())
+            {
+                _context.Ambientes.Add(new Ambiente
+                {
+                    Nombre = "Sala 1",
+                    Capacidad = 40,
+                    TipoAmbiente = "Precencial",
+                    Ubicacion = "Centro Comercio y Servicios",
+                    IsActive = true
+                });
+                _context.Ambientes.Add(new Ambiente
+                {
+                    Nombre = "Sala 2",
+                    Capacidad = 50,
+                    TipoAmbiente = "Precencial",
+                    Ubicacion = "Facultad de Electronica y Telecomunicaciones",
+                    IsActive = true
+                });
+                _context.Ambientes.Add(new Ambiente
+                {
+                    Nombre = "Moodle",
+                    Capacidad = 44,
+                    TipoAmbiente = "Virtual",
+                    Ubicacion = "Classroom",
+                    IsActive = true
+                });
+                _context.Ambientes.Add(new Ambiente
+                {
+                    Nombre = "Sala 3",
+                    Capacidad = 30,
+                    TipoAmbiente = "Precencial",
+                    Ubicacion = "PIA",
+                    IsActive = true
+                });
+            }
+            await _context.SaveChangesAsync();
         }
 
         private async Task CheckProgramasAsync()
@@ -83,7 +124,6 @@ namespace DataAccess.Data
 
             return user;
         }
-
 
         private async Task CheckRolesAsync()
         {

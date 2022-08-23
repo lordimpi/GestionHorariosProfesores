@@ -13,5 +13,6 @@ namespace MiniSIMCA.Helpers
         IEnumerable<SelectListItem> GetComboTipoDocente();
         IEnumerable<SelectListItem> GetComboTipoContrato();
         IEnumerable<SelectListItem> GetComboArea();
+        IEnumerable<SelectListItem> GetComboTipoAmbiente();
     }
 }

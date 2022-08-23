@@ -27,6 +27,7 @@ namespace DataAccess.Data
             builder.Entity<PeriodoAcademico>().HasIndex(pa => pa.Periodo_Nombre).IsUnique();
             builder.Entity<PeriodoAcademicoPrograma>().HasKey(pAp => new { pAp.PeriodoAcademicoId, pAp.ProgramaId });
             builder.Entity<User>().HasIndex(d => d.Docente_Identificacion).IsUnique();
+            builder.Entity<Ambiente>().HasIndex(a => a.Nombre).IsUnique();
         }
 
     }

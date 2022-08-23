@@ -27,6 +27,10 @@ builder.Services.AddScoped<IDocenteRepository, DocenteRepository>();
 builder.Services.AddScoped<IDocenteService, DocenteService>();
 builder.Services.AddScoped<IUserHelper, UserHelper>();
 builder.Services.AddScoped<IUserHelperDA, UserHelperDA>();
+builder.Services.AddScoped<IAmbienteRepository, AmbienteRepository>();
+builder.Services.AddScoped<IAmbienteService, AmbienteService>();
+builder.Services.AddScoped<IHorarioRepository, HorarioRepository>();
+builder.Services.AddScoped<IHorarioService, HorarioService>();
 
 builder.Services.AddIdentity<User, IdentityRole>(cfg =>
 {

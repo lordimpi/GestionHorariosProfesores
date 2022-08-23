@@ -14,10 +14,11 @@ namespace DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Ubicacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TipoAmbiente = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Capacidad = table.Column<int>(type: "int", nullable: false)
+                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Ubicacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    TipoAmbiente = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Capacidad = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -34,6 +35,7 @@ namespace DataAccess.Migrations
                     Horario_Hora_Inicio = table.Column<int>(type: "int", nullable: false),
                     Horario_Hora_Fin = table.Column<int>(type: "int", nullable: false),
                     Horario_Duracion = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     PeriodoAcademicoId = table.Column<int>(type: "int", nullable: false),
                     AmbienteId = table.Column<int>(type: "int", nullable: true)
@@ -58,6 +60,12 @@ namespace DataAccess.Migrations
                         principalColumn: "Periodo_Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ambientes_Nombre",
+                table: "Ambientes",
+                column: "Nombre",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Horarios_AmbienteId",

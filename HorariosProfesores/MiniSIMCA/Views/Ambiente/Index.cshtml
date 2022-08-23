@@ -1,0 +1,52 @@
+﻿@model IEnumerable<DataAccess.Data.Entities.Ambiente>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<flash dismissable="true" />
+
+<h1>Ambientes</h1>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="container-fluid">
+    <div class="card mt-2">
+        <div class="card-header text-success">
+            <i class="fa fa-book"></i>  <strong>Ambientes Academicos</strong>
+        </div>
+        <div class="card-body">
+            <div id="view-all">
+                @await Html.PartialAsync("_ViewAllAmbientesAcademicos", Model)
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<partial name="_AddOrEditDialog" />*@
+<partial name="_DeleteDialog" />
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="~/js/showmodal.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#AmbientesTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                "aLengthMenu": [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, "Todos"]
+                ]
+            });
+        });
+    </script>
+
+    <script>
+        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Ambiente/Delete/', false);
+    </script>*
+}
