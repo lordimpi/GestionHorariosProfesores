@@ -51,6 +51,31 @@ namespace MiniSIMCA.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public async Task<IActionResult> Details()
+        {
+            User user = await _userHelper.GetUserAsync(User.Identity.Name);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            UserDetailsViewModel model = new()
+            {
+                UserName = user.UserName,
+                Docente_Apellidos = user.Docente_Apellidos,
+                Docente_Area = user.Docente_Area,
+                Docente_Identificacion = user.Docente_Identificacion,
+                Docente_Nombres = user.Docente_Nombres,
+                Docente_Tipo = user.Docente_Tipo,
+                Docente_TipoContrato = user.Docente_TipoContrato,
+                Docente_TipoIdentificacion = user.Docente_TipoIdentificacion,
+                IsActive = user.IsActive,
+                UserType = user.UserType
+            };
+
+            return View(model);
+        }
+
         public IActionResult Register()
         {
             AddUserViewModel model = new()
