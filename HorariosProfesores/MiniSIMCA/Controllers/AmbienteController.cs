@@ -1,9 +1,12 @@
 ﻿using DataAccess.Data.Entities;
 using Infrastructure.Services.Contracts;
+using Infrastructure.Services.Implementations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiniSIMCA.Helpers;
 using MiniSIMCA.Models;
+using Vereyon.Web;
+using static MiniSIMCA.Helpers.ModalHelper;
 
 namespace MiniSIMCA.Controllers
 {
@@ -11,11 +14,13 @@ namespace MiniSIMCA.Controllers
     {
         private readonly IAmbienteService _ambienteService;
         private readonly ICombosHelper _combosHelper;
+        private readonly IFlashMessage _flashMessage;
 
-        public AmbienteController(IAmbienteService ambienteService, ICombosHelper combosHelper)
+        public AmbienteController(IAmbienteService ambienteService, ICombosHelper combosHelper, IFlashMessage flashMessage)
         {
             _ambienteService = ambienteService;
             _combosHelper = combosHelper;
+            this._flashMessage = flashMessage;
         }
 
         public async Task<IActionResult> Index()
@@ -145,6 +150,21 @@ namespace MiniSIMCA.Controllers
             }
             model.TipoAmbientes = _combosHelper.GetComboTipoAmbiente();
             return View(model);
+        }
+        
+        [NoDirectAccess]
+        public async Task<IActionResult> Delete(int id)
+        {
+
+            Ambiente ambiente = await _ambienteService.GetAmbienteByIdAsync(id);
+            if (ambiente == null)
+            {
+                return NotFound();
+            }
+
+            await _ambienteService.DeleteAmbienteByIdAsync(id);
+            _flashMessage.Info("Registro Desactivado.");
+            return RedirectToAction(nameof(Index));
         }
     }
 }
