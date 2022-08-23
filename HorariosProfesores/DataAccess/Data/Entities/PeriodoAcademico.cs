@@ -25,6 +25,7 @@ namespace DataAccess.Data.Entities
 
         public ICollection<Programa> Programas { get; set; }
         public ICollection<PeriodoAcademicoPrograma> PeriodoAcademicoProgramas { get; set; }
+        public Horario Horario { get; set; }
 
         [Display(Name ="Cantidad Programas")]
         public int CantidadProgramas => PeriodoAcademicoProgramas == null ? 0 : PeriodoAcademicoProgramas.Count;

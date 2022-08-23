@@ -214,5 +214,28 @@ namespace MiniSIMCA.Helpers
             });
             return list;
         }
+
+        public IEnumerable<SelectListItem> GetComboTipoAmbiente()
+        {
+            List<SelectListItem> list = new()
+            {
+                new SelectListItem()
+                {
+                    Text = "Virtual",
+                    Value = $"{TipoAmbiente.Virtual}"
+                },
+                new SelectListItem()
+                {
+                    Text = "Precencial",
+                    Value = $"{TipoAmbiente.Precencial}"
+                },
+            };
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione el tipo de ambiente...]",
+                Value = "0"
+            });
+            return list;
+        }
     }
 }

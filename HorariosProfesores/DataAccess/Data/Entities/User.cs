@@ -46,5 +46,7 @@ namespace DataAccess.Data.Entities
 
         [Display(Name = "Tipo de usuario")]
         public UserType UserType { get; set; }
+
+        public ICollection<Horario> Horarios { get; set; }
     }
 }

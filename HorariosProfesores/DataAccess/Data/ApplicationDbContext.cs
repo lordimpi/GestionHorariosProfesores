@@ -16,6 +16,8 @@ namespace DataAccess.Data
         public DbSet<Competencia> Competencias { get; set; }
         public DbSet<PeriodoAcademico> PeriodoAcademicos { get; set; }
         public DbSet<PeriodoAcademicoPrograma> PeriodoAcademicoProgramas { get; set; }
+        public DbSet<Horario> Horarios { get; set; }
+        public DbSet<Ambiente> Ambientes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
